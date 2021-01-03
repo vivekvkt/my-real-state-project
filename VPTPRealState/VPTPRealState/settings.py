@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'pages',
+    'listings',
+    'realtors',
+    'accounts',
+    'contacts',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +79,21 @@ WSGI_APPLICATION = 'VPTPRealState.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'realstate',
+        'USER': 'vivekdb',
+        'PASSWORD': '12345',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -118,10 +134,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+TATIC_ROOT= os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
-STATIC_ROOT  = os.path.join(BASE_DIR,'static')
-
-STATICFILESE_DIRS=[
-    os.path.join(BASE_DIR,'VPTPRealState/static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'VPTPRealState/static')
 ]
+
+# Media Folder Settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+
+# Messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
